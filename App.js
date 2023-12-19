@@ -1,69 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Image, ScrollView, Button} from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 import { Ionicons, FontAwesome5 } from '@expo/vector-icons'; // Ensure these icons are installed
+import PreferencesScreen2 from './PreferencesScreen2';
+import ShoppingCartScreen from './ShoppingCartScreen';
+import RecipePlanScreen from './RecipePlanScreen';
+import PurchaseScreen from './PurchaseScreen';
+import PurchaseSuccessScreen from './PurchaseSuccessScreen';
+import HomePage from './HomePage';
+import DetailedScheduleScreen from './DetailedScheduleScreen';
+import RecipeDetailScreen from './RecipeDetailScreen';
+import LikedRecipesScreen from './LikedRecipesScreen';
 
 const Stack = createNativeStackNavigator();
-
-function HomePage({ route }) {
-  const allergiesFromParams = route.params?.allergies || [];
-  const handleLikeRecipe = (recipeId) => {
-    // Logic to handle liking a recipe
-  };
-
-  // Placeholder data for recipes
-  const recipes = [
-    {
-      id: 1,
-      name: 'Beef with mash potatoes and cabbage',
-      ingredients: ['beef', 'potatoes', 'cabbage'],
-      image: require('./assets/beef-dish.png'), // replace with actual image path or uri
-    },
-    {
-      id: 2,
-      name: 'Chicken Burrito (rice, beans, onion)',
-      ingredients: ['chicken', 'rice', 'beans', 'onion'],
-      image: require('./assets/chicken-burrito.png'), // replace with actual image path or uri
-    },
-    // ... more recipes
-  ];
-
-  // Filter recipes that do not contain any of the user's allergens
-  const filteredRecipes = recipes.filter(recipe =>
-    !recipe.ingredients.some(ingredient => allergiesFromParams.includes(ingredient.toLowerCase()))
-  );
-
-
-  return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Ionicons name="person-circle" size={30} color="black" />
-        <Text style={styles.headerTitle}>Insta Meals</Text>
-        <Ionicons name="bell" size={30} color="black" />
-      </View>
-
-      <ScrollView style={styles.scrollView}>
-        {filteredRecipes.map((recipe) => (
-          <View key={recipe.id} style={styles.recipeCard}>
-            <Image source={recipe.image} style={styles.recipeImage} />
-            <Text style={styles.recipeName}>{recipe.name}</Text>
-            <TouchableOpacity onPress={() => handleLikeRecipe(recipe.id)}>
-              <FontAwesome5 name="thumbs-up" size={24} color="black" />
-            </TouchableOpacity>
-          </View>
-        ))}
-      </ScrollView>
-
-      <View style={styles.footer}>
-        <Ionicons name="home" size={30} color="black" />
-        <Ionicons name="heart" size={30} color="black" />
-        <FontAwesome5 name="calendar" size={30} color="black" />
-        <FontAwesome5 name="shopping-cart" size={30} color="black" />
-      </View>
-    </View>
-  );
-}
 
 function WelcomeScreen({ navigation }) {
   return (
@@ -162,6 +113,8 @@ function AddressScreen({ navigation }) {
     </View>
   );
 }
+
+
 
 function PhoneNumberScreen({ navigation }) {
   const [phoneNumber, setPhoneNumber] = useState('');
@@ -269,7 +222,14 @@ const App = () => {
         <Stack.Screen name="AddressScreen" component={AddressScreen} />
         <Stack.Screen name="PreferencesScreen" component={PreferencesScreen} />
         <Stack.Screen name="HomePage" component={HomePage} />
-
+        <Stack.Screen name="ShoppingCartScreen" component={ShoppingCartScreen} />
+        <Stack.Screen name="PreferencesScreen2" component={PreferencesScreen2} />
+        <Stack.Screen name="RecipePlanScreen" component={RecipePlanScreen} />
+        <Stack.Screen name="PurchaseScreen" component={PurchaseScreen} />
+        <Stack.Screen name="PurchaseSuccessScreen" component={PurchaseSuccessScreen} />
+        <Stack.Screen name="DetailedScheduleScreen" component={DetailedScheduleScreen} />
+        <Stack.Screen name="RecipeDetailScreen" component={RecipeDetailScreen} />
+        <Stack.Screen name="LikedRecipesScreen" component={LikedRecipesScreen} />
         
       </Stack.Navigator>
     </NavigationContainer>
@@ -307,6 +267,13 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
   },
+  header: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 20,
+  },
+  
   headerText: {
     fontSize: 20,
     fontWeight: 'bold',
@@ -355,6 +322,83 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
   },
+  footer: {
+    flexDirection: 'row',
+    justifyContent: 'space-around', // This will give space around each icon evenly
+    alignItems: 'center',
+    width: '100%', // Make sure the footer is as wide as the screen
+    paddingVertical: 10, // Add some vertical padding
+  },
+  
+  scrollView: {
+    paddingBottom: 20,
+  },
+  recipeCard: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  headerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 10,
+    marginTop: 20, // Adjust for status bar height if necessary
+  },
+  headerTextContainer: {
+    alignItems: 'center',
+  },
+  headerTitle: {
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
+  headerSubtitle: {
+    fontSize: 12,
+    color: 'grey',
+  },
+  recipeCard: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    padding: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+  },
+  recipeDetails: {
+    flex: 1,
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  likeButton: {
+    // Style for the like button (thumbs up)
+    marginLeft: 10,
+  },
+  confirmButton: {
+    backgroundColor: 'blue',
+    padding: 15,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+    margin: 10,
+  },
+  confirmButtonText: {
+    color: 'white',
+    fontSize: 16,
+  },
+  button: {
+    padding: 10,
+    backgroundColor: 'blue',
+    borderRadius: 5,
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 16,
+  },
+  
 });
 
 export default App;
