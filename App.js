@@ -13,6 +13,7 @@ import HomePage from './HomePage';
 import DetailedScheduleScreen from './DetailedScheduleScreen';
 import RecipeDetailScreen from './RecipeDetailScreen';
 import LikedRecipesScreen from './LikedRecipesScreen';
+import Surprise from './Surprise';
 
 const Stack = createNativeStackNavigator();
 
@@ -230,6 +231,7 @@ const App = () => {
         <Stack.Screen name="DetailedScheduleScreen" component={DetailedScheduleScreen} />
         <Stack.Screen name="RecipeDetailScreen" component={RecipeDetailScreen} />
         <Stack.Screen name="LikedRecipesScreen" component={LikedRecipesScreen} />
+        <Stack.Screen name="Surprise" component={Surprise} />
         
       </Stack.Navigator>
     </NavigationContainer>
