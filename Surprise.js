@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet,TextInput, Image } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet,TextInput, Image,  TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 function Surprise({ navigation }) {
@@ -10,8 +10,31 @@ function Surprise({ navigation }) {
   const navigateToScreen = (screenName, params = {}) => {
     navigation.navigate(screenName, params);
   };
+  const dummyRecipes = [
+    {
+      id: 1,
+      name: 'Pasta Primavera',
+      costPerPerson: 5,
+      serves: 4,
+      image: require('./assets/pasta.png'),
+    },
+    {
+      id: 2,
+      name: 'Chicken Curry',
+      costPerPerson: 7,
+      serves: 3,
+      image: require('./assets/curry.png'),
+    },
+  ];
+  
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
 
+  const surpriseMe = () => {
+    // Directly navigate to the RecipeDetailScreen without selecting a recipe
+    navigateToScreen('RecipeDetailScreen');
+};
   return (
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
     <View style={styles.container}>
       <View style={styles.header}>
         <Ionicons name="person-circle" size={30} color="black" />
@@ -53,9 +76,15 @@ function Surprise({ navigation }) {
         {/* Surprise Image */}
         <Image source={require('./assets/cheer.png')} style={styles.surpriseImage} />
         
-        <TouchableOpacity style={styles.surpriseButton}>
-          <Text style={styles.surpriseButtonText}>SURPRISE ME</Text>
-        </TouchableOpacity>
+        <TouchableOpacity style={styles.surpriseButton} onPress={surpriseMe}>
+        <Text style={styles.surpriseButtonText}>SURPRISE ME</Text>
+      </TouchableOpacity>
+      {selectedRecipe && (
+        <View style={styles.recipeCard}>
+          <Image source={selectedRecipe.image} style={styles.recipeImage} />
+          <Text style={styles.recipeName}>{selectedRecipe.name}</Text>
+          {/* Other details about the selected recipe */}
+        </View> )}
       </View>
 
       {/* Footer navigation icons would be similar to your HomePage */}
@@ -63,6 +92,7 @@ function Surprise({ navigation }) {
         {/* ... footer icons ... */}
       </View>
     </View>
+     </TouchableWithoutFeedback>
   );
 }
 

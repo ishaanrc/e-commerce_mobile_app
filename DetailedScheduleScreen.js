@@ -8,8 +8,9 @@ const DetailedScheduleScreen = ({ navigation }) => {
     meal: "Beef with mash potatoes and cabbage",
   };
   const navigateToRecipeDetail = () => {
-    navigation.navigate('RecipeDetailScreen');
+    navigation.navigate('RecipeDetailScreen', { recipe: selectedDateDetails.meal });
   };
+  
 
   return (
     <View style={styles.container}>

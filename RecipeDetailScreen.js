@@ -1,8 +1,9 @@
 // RecipeDetailScreen.js
 import React from 'react';
-import { View, Text, ScrollView, Image, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, Image, StyleSheet, TouchableOpacity } from 'react-native';
 
-const RecipeDetailScreen = () => {
+const RecipeDetailScreen = ({ route }) => {
+  const { recipe } = route.params;
     const beefImage = require('./assets/beef-dish.png'); 
   return (
     <ScrollView style={styles.container}>
@@ -27,6 +28,9 @@ const RecipeDetailScreen = () => {
         <Text style={styles.text}>4. Serve beef with a side of mashed potatoes.</Text>
         <Text style={styles.text}>5. Garnish with parsley if desired.</Text>
       </View>
+      <TouchableOpacity style={styles.addToCartButton} onPress={() => {/* Add to cart logic here */}}>
+        <Text style={styles.addToCartButtonText}>Add to Cart</Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 };
@@ -59,6 +63,19 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     marginBottom: 5,
+  },
+  addToCartButton: {
+    backgroundColor: 'black',
+    padding: 15,
+    borderRadius: 5,
+    width: '100%',
+    alignItems: 'center',
+    marginVertical: 20,
+  },
+  addToCartButtonText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: 'bold',
   },
   // Add more styles as needed
 });
