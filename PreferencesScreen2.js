@@ -13,8 +13,12 @@ import {
 import { generateShoppingList } from './utils';
 
 const DurationOptions = ['1 week', '2 weeks'];
+const DeliveryOptions = ['Delivery', 'Carry Out'];
+
+
 
 const PreferencesScreen2 = ({ navigation, route }) => {
+  const [selectedOption, setSelectedOption] = useState(DeliveryOptions[0]); // New state for delivery option
   const [selectedDuration, setSelectedDuration] = useState(DurationOptions[0]);
   const [mealsPerDay, setMealsPerDay] = useState('');
   const [daysPerWeek, setDaysPerWeek] = useState('');
@@ -29,15 +33,16 @@ const PreferencesScreen2 = ({ navigation, route }) => {
   };
 
   const handleNext = () => {
-    const { selectedRecipes } = route.params;
+    // Safely access selectedRecipes from route.params with a fallback to an empty array
+    const selectedRecipes = route.params?.selectedRecipes || [];
     const recipePlan = generateRecipePlan(selectedRecipes, mealsPerDay, daysPerWeek);
-  
     navigation.navigate('RecipePlanScreen', {
       recipePlan,
       selectedMeals,
       daysPerWeek,
     });
   };
+  
   
   
   const calculateTotalMeals = (duration, mealsPerDay, daysPerWeek) => {
@@ -171,7 +176,19 @@ const PreferencesScreen2 = ({ navigation, route }) => {
           keyboardType="numeric"
           placeholder="Enter number of days"
         />
-
+ <Text style={styles.label}>Choose your receiving method:</Text>
+ {DeliveryOptions.map((option, index) => (
+          <TouchableOpacity
+            key={index}
+            style={[
+              styles.optionButton,
+              selectedOption === option && styles.selectedOptionButton,
+            ]}
+            onPress={() => setSelectedOption(option)}
+          >
+            <Text style={styles.optionText}>{option}</Text>
+          </TouchableOpacity>
+        ))}
         <Button title="Next" onPress={handleNext} />
       </ScrollView>
     </KeyboardAvoidingView>

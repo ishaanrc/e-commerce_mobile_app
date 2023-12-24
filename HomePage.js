@@ -67,26 +67,23 @@ function HomePage({ navigation, route }) {
   };
   const renderRecipe = ({ item: recipe }) => (
     <View style={styles.recipeCard}>
-      <TouchableOpacity onPress={() => toggleRecipeSelection(recipe)}>
+      <TouchableOpacity onPress={() => toggleRecipeSelection(recipe)} style={styles.recipeTouchable}>
         <Image source={recipe.image} style={styles.recipeImage} />
         <View style={styles.recipeDetails}>
           <Text style={styles.recipeName}>{recipe.name}</Text>
-          <Ionicons
-            name={selectedRecipes.some((r) => r.id === recipe.id) ? 'checkbox' : 'square-outline'}
-            size={24}
-            color="black"
-          />
+          {/* Removed Checkbox Icon */}
         </View>
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => handleLikeRecipe(recipe)} style={styles.likeButton}>
-        <FontAwesome5 
-          name="thumbs-up" 
-          size={24} 
-          color={likedRecipes.some(r => r.id === recipe.id) ? 'darkblue' : 'black'} 
+      <TouchableOpacity onPress={() => toggleRecipeSelection(recipe)} style={styles.likeButton}>
+        <FontAwesome5
+          name={selectedRecipes.some((r) => r.id === recipe.id) ? "thumbs-up" : "thumbs-up"}
+          size={24}
+          color={selectedRecipes.some(r => r.id === recipe.id) ? 'darkblue' : 'black'}
         />
       </TouchableOpacity>
     </View>
   );
+  
 
   
   // When navigating to LikedRecipesScreen
@@ -160,7 +157,7 @@ function HomePage({ navigation, route }) {
   onPress={() => navigateToScreen('LikedRecipesScreen', { likedRecipes })} 
   style={styles.iconStyle}
 >
-  <Ionicons name="heart" size={30} color={activeTab === 'LikedRecipesScreen' ? 'blue' : 'black'} />
+  
 </TouchableOpacity>
 
         </View>
@@ -216,8 +213,8 @@ function HomePage({ navigation, route }) {
         <TouchableOpacity onPress={() => navigateToScreen('DetailedScheduleScreen')}>
           <FontAwesome5 name="calendar" size={30} color={activeTab === 'DetailedScheduleScreen' ? 'blue' : 'black'} />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigateToScreen('ShoppingCartScreen')}>
-          <FontAwesome5 name="shopping-cart" size={30} color={activeTab === 'ShoppingCartScreen' ? 'blue' : 'black'} />
+        <TouchableOpacity onPress={() => navigateToScreen('ShoppingCartIcon')}>
+          <FontAwesome5 name="shopping-cart" size={30} color={activeTab === 'ShoppingCartIcon' ? 'blue' : 'black'} />
         </TouchableOpacity>
       </View>
     </View>

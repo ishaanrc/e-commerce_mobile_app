@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   purchaseButton: {
-    backgroundColor: 'blue',
+    backgroundColor: 'black',
     padding: 15,
     borderRadius: 5,
     alignItems: 'center',

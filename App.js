@@ -14,7 +14,8 @@ import DetailedScheduleScreen from './DetailedScheduleScreen';
 import RecipeDetailScreen from './RecipeDetailScreen';
 import LikedRecipesScreen from './LikedRecipesScreen';
 import Surprise from './Surprise';
-
+import ShoppingCartIcon from './ShoppingCartIcon';
+import Ing from './Ing';
 const Stack = createNativeStackNavigator();
 
 function WelcomeScreen({ navigation }) {
@@ -232,7 +233,8 @@ const App = () => {
         <Stack.Screen name="RecipeDetailScreen" component={RecipeDetailScreen} />
         <Stack.Screen name="LikedRecipesScreen" component={LikedRecipesScreen} />
         <Stack.Screen name="Surprise" component={Surprise} />
-        
+        <Stack.Screen name="ShoppingCartIcon" component={ShoppingCartIcon} />
+        <Stack.Screen name="Ing" component={Ing} />
       </Stack.Navigator>
     </NavigationContainer>
   );
